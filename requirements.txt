@@ -1,12 +1,21 @@
 streamlit
 python-dotenv
 langchain
-langchain-community
-langchain-huggingface
-langchain-google-genai
+faiss-cpu
 sentence-transformers
-chromadb
+torch
 beautifulsoup4
 lxml
 requests
 aiohttp
+
+# Gemini / Google Generative AI
+langchain-google-genai
+langchain-huggingface
+
+# Crawl4ai si utilisé
+crawl4ai
+
+# Compatibilité Transformers
+keras==2.11.0
+tensorflow==2.11.0
