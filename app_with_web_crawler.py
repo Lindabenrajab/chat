@@ -81,8 +81,8 @@ def trouver_formules(appareil, prix):
         ],
         "macbook": [
             (3600, 5500, "Ifrah", 276, 0, 0, 0, 0),
-            (5501, 7900, "Erteh", 345, 0, 0, 0, 0),
-            (7901, 9000, "Thana", 399, 0, 0, 0, 0),
+            (5501, 7900, "Erteh", 345, 0, 0, 0),
+            (7901, 9000, "Thana", 399, 0, 0, 0),
         ]
     }
     appareil = appareil.lower()
@@ -238,7 +238,6 @@ class EnhancedRAGChain:
                 result["sources"] = list(unique_sources.values())
             return result
 
-
 def main():
     st.set_page_config(page_title="Chatbot FAQ Assurance", page_icon="🤖", layout="wide")
     st.title("🤖 Assistant FAQ - Services d'assurance")
@@ -258,7 +257,6 @@ def main():
         st.session_state.user_input_box = ""
 
     if not st.session_state.vector_store_initialized:
-        # Utiliser un chemin simple (assure-toi que faq.txt est dans le dossier du script ou racine)
         faq_path = "FAQ.txt"
         if not os.path.exists(faq_path):
             st.error(f"Le fichier {faq_path} est introuvable. Merci de le placer au bon endroit.")
