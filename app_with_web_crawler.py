@@ -81,8 +81,8 @@ def trouver_formules(appareil, prix):
         ],
         "macbook": [
             (3600, 5500, "Ifrah", 276, 0, 0, 0, 0),
-            (5501, 7900, "Erteh", 345, 0, 0, 0),
-            (7901, 9000, "Thana", 399, 0, 0, 0),
+            (5501, 7900, "Erteh", 345, 0, 0, 0, 0),
+            (7901, 9000, "Thana", 399, 0, 0, 0, 0),
         ]
     }
     appareil = appareil.lower()
@@ -202,7 +202,6 @@ class EnhancedRAGChain:
         final_price = st.session_state.collected_price
         final_product = st.session_state.collected_product
 
-        # Vérifie si la question parle explicitement de prix ou appareil
         question_lower = query.lower()
         has_price_word = bool(re.search(r'\b(prix|tarif|coût|combien|valeur)\b', question_lower))
         has_device_word = any(device in question_lower for device in [
@@ -211,15 +210,11 @@ class EnhancedRAGChain:
             "machine à laver", "pack", "macbook"
         ])
 
-        # Affiche la formule seulement si on a un prix ET un appareil collectés
-        # ET que la question parle de prix ou appareil (pour éviter les répétitions)
         if final_price is not None and final_product is not None and (has_price_word or has_device_word):
             texte_formules = self.contextualize_query(query, chat_history)
             return {"output": texte_formules}
         else:
-            # Sinon on répond à partir de la FAQ classique
             retrieved_docs = self.retriever.get_relevant_documents(query)
-
             if not retrieved_docs:
                 all_docs = list(self.retriever.vectorstore.docstore._dict.values())
                 for doc in all_docs:
@@ -237,6 +232,7 @@ class EnhancedRAGChain:
                 unique_sources = {(doc.page_content, doc.metadata.get("url", doc.metadata.get("question"))): doc for doc in retrieved_docs}
                 result["sources"] = list(unique_sources.values())
             return result
+
 
 def main():
     st.set_page_config(page_title="Chatbot FAQ Assurance", page_icon="🤖", layout="wide")
@@ -264,7 +260,7 @@ def main():
 
         faq_documents = load_faq_documents(faq_path)
         st.session_state.faq_documents = faq_documents
-        embeddings = HuggingFaceEmbeddings(model_kwargs={"device": "cpu"})
+        embeddings = HuggingFaceEmbeddings()  # Sans model_kwargs
         vectorstore = FAISS.from_documents(faq_documents, embeddings)
         retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 8})
 
