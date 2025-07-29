@@ -259,7 +259,7 @@ def main():
 
     if not st.session_state.vector_store_initialized:
         # Utiliser un chemin simple (assure-toi que faq.txt est dans le dossier du script ou racine)
-        faq_path = "faq.txt"
+        faq_path = "FAQ.txt"
         if not os.path.exists(faq_path):
             st.error(f"Le fichier {faq_path} est introuvable. Merci de le placer au bon endroit.")
             st.stop()
