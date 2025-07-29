@@ -1,4 +1,6 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
 import re
 import streamlit as st
 from dotenv import load_dotenv
@@ -7,10 +9,6 @@ from langchain.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
-import torch
-device = torch.device("cpu")
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -264,8 +262,10 @@ def main():
         faq_documents = load_faq_documents(faq_path)
         st.session_state.faq_documents = faq_documents
 
-        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2", model_kwargs={"device": device})
-
+        embeddings = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2",
+            model_kwargs={"device": "cpu"}
+        )
 
         vectorstore = FAISS.from_documents(faq_documents, embeddings)
         retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 8})
