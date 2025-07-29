@@ -266,7 +266,7 @@ def main():
 
         faq_documents = load_faq_documents(faq_path)
         st.session_state.faq_documents = faq_documents
-        embeddings = HuggingFaceEmbeddings()
+        embeddings = HuggingFaceEmbeddings(model_kwargs={"device": "cpu"})
         vectorstore = FAISS.from_documents(faq_documents, embeddings)
         retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 8})
 
