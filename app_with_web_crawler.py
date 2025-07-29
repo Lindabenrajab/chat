@@ -258,7 +258,12 @@ def main():
         st.session_state.user_input_box = ""
 
     if not st.session_state.vector_store_initialized:
-        faq_path = os.path.join(os.path.dirname(__file__), "faq.txt")
+        # Utiliser un chemin simple (assure-toi que faq.txt est dans le dossier du script ou racine)
+        faq_path = "faq.txt"
+        if not os.path.exists(faq_path):
+            st.error(f"Le fichier {faq_path} est introuvable. Merci de le placer au bon endroit.")
+            st.stop()
+
         faq_documents = load_faq_documents(faq_path)
         st.session_state.faq_documents = faq_documents
         embeddings = HuggingFaceEmbeddings()
