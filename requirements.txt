@@ -17,5 +17,3 @@ langchain-huggingface
 crawl4ai
 
 # Compatibilité Transformers
-keras==2.11.0
-tensorflow==2.11.0
