@@ -1,19 +1,10 @@
 streamlit
 python-dotenv
 langchain
-langchain-community
-langchain-core
 langchain-huggingface
 langchain-google-genai
-faiss-cpu
 sentence-transformers
-torch
-crawl4ai
 beautifulsoup4
 lxml
 requests
 aiohttp
-
-# Version recommandée de keras compatible avec transformers
-keras==2.11.0
-tensorflow==2.11.0
